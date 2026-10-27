@@ -4,6 +4,8 @@
   const cw2 = document.getElementById('cw2')
   const cw3 = document.getElementById('cw3')
   const answer = document.getElementById('answer')
+  const select = document.querySelector("select");
+  genSelectList();
   function delay(miliseconds)
   {
     return new Promise((resolve,reject)=>{
@@ -11,6 +13,16 @@
         resolve();
       },miliseconds);
     })
+  }
+  function genSelectList()
+  {
+    for(let i=0;i<10;i++)
+    {
+      let option = document.createElement("option");
+      option.value = i+1;
+      option.innerHTML = `${i+1}`;
+      select.appendChild(option);
+    }
   }
   example.addEventListener("click", function () {
     fetch('https://jsonplaceholder.typicode.com/posts')
@@ -22,10 +34,12 @@
   })
 
   cw1.addEventListener("click", async function () {
+    //Z pośpiechu nie zauważyłem że nie dałem przed fetchem - poprawione
+     answer.innerHTML  = "Loading...";
     let response = await fetch('https://jsonplaceholder.typicode.com/posts')
     let posts = await response.json();
     let list = document.createElement("ul");
-    answer.innerHTML  = "Loading...";
+   
     await delay(1000);
     for(let post of posts)
     {
@@ -37,10 +51,13 @@
     answer.appendChild(list);
   });
 
-  cw2.addEventListener("click", function () {
-    //TODO
+  cw2.addEventListener("click", async function () {
+    answer.innerHTML  = "Loading...";
+    let response = await fetch(`https://jsonplaceholder.typicode.com/posts/${select.value}`)
+    let post = await response.json();
+    await delay(1000);
+    answer.innerHTML = `<b>${post.title}</b></br>${post.body}`;
   })
-
   cw3.addEventListener("click", function () {
     //TODO
   })

@@ -7,6 +7,7 @@
   const select = document.querySelector("select");
   const postTitleInput = document.getElementById("postTitleInput");
   const postBodyInput = document.getElementById("postBodyInput");
+  const loadingDialog = document.querySelector("dialog");
   genSelectList();
   function delay(miliseconds)
   {
@@ -36,8 +37,8 @@
   })
 
   cw1.addEventListener("click", async function () {
-    //Z pośpiechu nie zauważyłem że nie dałem przed fetchem - poprawione
      answer.innerHTML  = "Loading...";
+     loadingDialog.showModal();
     let response = await fetch('https://jsonplaceholder.typicode.com/posts')
     let posts = await response.json();
     let table = document.createElement("table");
@@ -48,19 +49,23 @@
       table.innerHTML += `<td class="userid">${post.userId}</td><td class="title">${post.title}</td><td class="body">${post.body}</td>`;
     }
     answer.innerHTML ="";
+    loadingDialog.close();
     answer.appendChild(table);
   });
 
   cw2.addEventListener("click", async function () {
     answer.innerHTML  = "Loading...";
+    loadingDialog.showModal();
     let response = await fetch(`https://jsonplaceholder.typicode.com/posts/${select.value}`)
     let post = await response.json();
     await delay(1000);
     console.log(`User id: ${post.userId} - ${post.title} \n ${post.body}`);
     answer.innerHTML = `<b>${post.title}</b></br>${post.body}`;
+     loadingDialog.close();
   })
   cw3.addEventListener("click", async function () {
     answer.innerHTML = "Processing...";
+    loadingDialog.showModal();
     let requestBody = {
       title: postTitleInput.value,
       body:postBodyInput.value,
@@ -84,6 +89,7 @@
     let json = await response.json();
     await delay(1000);
     answer.innerHTML = `Dodano nowy post o ID = ${json.id}`;
+    loadingDialog.close();
   })
 
 })();

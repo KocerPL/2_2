@@ -20,3 +20,8 @@ table,td,th
   border-collapse: collapse;
   border:1px solid black;
 }
+dialog
+{
+  background-color: blue;
+  color:white;
+}

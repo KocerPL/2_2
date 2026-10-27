@@ -2,3 +2,21 @@ html {
   height: 100%;
   width: 100%;
 }
+
+#answer
+{
+  text-align: center;
+}
+.title
+{
+  color:red;
+}
+.body
+{
+  color:green;
+}
+table,td,th
+{
+  border-collapse: collapse;
+  border:1px solid black;
+}

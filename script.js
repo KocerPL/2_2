@@ -40,17 +40,15 @@
      answer.innerHTML  = "Loading...";
     let response = await fetch('https://jsonplaceholder.typicode.com/posts')
     let posts = await response.json();
-    let list = document.createElement("ul");
-   
+    let table = document.createElement("table");
+    table.innerHTML = "<th>User id</th><th>Title</th><th>Body</th>";
     await delay(1000);
     for(let post of posts)
     {
-      let item = document.createElement("li");
-      item.innerHTML = `<b>${post.title}</b></br>${post.body}`;
-      list.appendChild(item);
+      table.innerHTML += `<td class="userid">${post.userId}</td><td class="title">${post.title}</td><td class="body">${post.body}</td>`;
     }
     answer.innerHTML ="";
-    answer.appendChild(list);
+    answer.appendChild(table);
   });
 
   cw2.addEventListener("click", async function () {

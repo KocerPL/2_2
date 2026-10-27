@@ -4,7 +4,14 @@
   const cw2 = document.getElementById('cw2')
   const cw3 = document.getElementById('cw3')
   const answer = document.getElementById('answer')
-
+  function delay(miliseconds)
+  {
+    return new Promise((resolve,reject)=>{
+      setTimeout(()=>{
+        resolve();
+      },miliseconds);
+    })
+  }
   example.addEventListener("click", function () {
     fetch('https://jsonplaceholder.typicode.com/posts')
       .then(response => response.json())
@@ -18,6 +25,8 @@
     let response = await fetch('https://jsonplaceholder.typicode.com/posts')
     let posts = await response.json();
     let list = document.createElement("ul");
+    answer.innerHTML  = "Loading...";
+    await delay(1000);
     for(let post of posts)
     {
       let item = document.createElement("li");

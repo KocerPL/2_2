@@ -56,6 +56,7 @@
     let response = await fetch(`https://jsonplaceholder.typicode.com/posts/${select.value}`)
     let post = await response.json();
     await delay(1000);
+    console.log(`User id: ${post.userId} - ${post.title} \n ${post.body}`);
     answer.innerHTML = `<b>${post.title}</b></br>${post.body}`;
   })
   cw3.addEventListener("click", async function () {

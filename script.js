@@ -14,9 +14,19 @@
       })
   })
 
-  cw1.addEventListener("click", function () {
-    //TODO
-  })
+  cw1.addEventListener("click", async function () {
+    let response = await fetch('https://jsonplaceholder.typicode.com/posts')
+    let posts = await response.json();
+    let list = document.createElement("ul");
+    for(let post of posts)
+    {
+      let item = document.createElement("li");
+      item.innerHTML = `<b>${post.title}</b></br>${post.body}`;
+      list.appendChild(item);
+    }
+    answer.innerHTML ="";
+    answer.appendChild(list);
+  });
 
   cw2.addEventListener("click", function () {
     //TODO

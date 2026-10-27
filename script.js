@@ -5,6 +5,8 @@
   const cw3 = document.getElementById('cw3')
   const answer = document.getElementById('answer')
   const select = document.querySelector("select");
+  const postTitleInput = document.getElementById("postTitleInput");
+  const postBodyInput = document.getElementById("postBodyInput");
   genSelectList();
   function delay(miliseconds)
   {
@@ -58,8 +60,31 @@
     await delay(1000);
     answer.innerHTML = `<b>${post.title}</b></br>${post.body}`;
   })
-  cw3.addEventListener("click", function () {
-    //TODO
+  cw3.addEventListener("click", async function () {
+    answer.innerHTML = "Processing...";
+    let requestBody = {
+      title: postTitleInput.value,
+      body:postBodyInput.value,
+      userId:1
+    };
+    let response = await fetch("https://jsonplaceholder.typicode.com/posts",
+      {
+        method:"POST",
+        body:JSON.stringify(requestBody),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      }
+    );
+    if(!response.ok)
+    {
+      answer.innerHTML = "Błędna odpowiedź. Zobacz konsole po więcej informacji";
+      console.error(answer);
+      return;
+    }
+    let json = await response.json();
+    await delay(1000);
+    answer.innerHTML = `Dodano nowy post o ID = ${json.id}`;
   })
 
 })();
